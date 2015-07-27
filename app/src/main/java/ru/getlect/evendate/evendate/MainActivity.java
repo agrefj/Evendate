@@ -13,10 +13,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.DayViewDecorator;
+import com.prolificinteractive.materialcalendarview.DayViewFacade;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateChangedListener;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnDateChangedListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -31,10 +38,18 @@ public class MainActivity extends ActionBarActivity
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mDrawerTitle;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Handle Toolbar
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -45,36 +60,89 @@ public class MainActivity extends ActionBarActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-//                R.drawable.ic_drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
-//            /**
-//             * Called when a drawer has settled in a completely closed state.
-//             */
-//            public void onDrawerClosed(View view) {
-//                super.onDrawerClosed(view);
-//                getActionBar().setTitle(mTitle);
-//                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-//            }
-//
-//            /**
-//             * Called when a drawer has settled in a completely open state.
-//             */
-//            public void onDrawerOpened(View drawerView) {
-//                super.onDrawerOpened(drawerView);
-//                getActionBar().setTitle(mDrawerTitle);
-//                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-//            }
-//        };
-//
-//        // Set the drawer toggle as the DrawerListener
-//        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        MaterialCalendarView widget = (MaterialCalendarView) findViewById(R.id.calendarView);
+        widget.setOnDateChangedListener(this);
+
+        widget.addDecorator(new PrimeDayDisableDecorator());
+        widget.addDecorator(new EnableOneToTenDecorator());
+
+
 
 
     }
 
 
+    @Override
+    public void onDateChanged(MaterialCalendarView materialCalendarView, CalendarDay calendarDay) {
+        String stringDay = String.valueOf(calendarDay);
+        Toast.makeText(this, stringDay,Toast.LENGTH_SHORT).show();
 
+    }
+
+    private static class PrimeDayDisableDecorator implements DayViewDecorator {
+
+        @Override
+        public boolean shouldDecorate(CalendarDay day) {
+            return PRIME_TABLE[day.getDay()];
+        }
+
+        @Override
+        public void decorate(DayViewFacade view) {
+            view.setDaysDisabled(true);
+        }
+
+        private static boolean[] PRIME_TABLE = {
+                false,  // 0?
+                true,
+                false,// 2
+                false,// 3
+                false,
+                false,// 5
+                false,
+                false,// 7
+                false,
+                false,
+                false,
+                false,// 11
+                false,
+                false,// 13
+                false,
+                false,
+                false,
+                false,// 17
+                false,
+                false,// 19
+                false,
+                false,
+                false,
+                true,// 23
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,// 29
+                false,
+                false,// 31
+                false,
+                false,
+                false, //PADDING
+        };
+    }
+
+    private static class EnableOneToTenDecorator implements DayViewDecorator {
+
+        @Override
+        public boolean shouldDecorate(CalendarDay day) {
+            return day.getDay() <= 10;
+        }
+
+        @Override
+        public void decorate(DayViewFacade view) {
+            view.setDaysDisabled(false);
+        }
+    }
 
 
 
@@ -136,6 +204,7 @@ public class MainActivity extends ActionBarActivity
 
         return super.onOptionsItemSelected(item);
     }
+
 
     /**
      * A placeholder fragment containing a simple view.
