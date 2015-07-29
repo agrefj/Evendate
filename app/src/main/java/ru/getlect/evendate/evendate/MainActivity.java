@@ -1,19 +1,21 @@
 package ru.getlect.evendate.evendate;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -21,6 +23,13 @@ import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateChangedListener;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 public class MainActivity extends ActionBarActivity
@@ -30,15 +39,15 @@ public class MainActivity extends ActionBarActivity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
+    private TextView tv_bottom;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
     private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
+    private android.support.v7.app.ActionBarDrawerToggle toggle;
     private CharSequence mDrawerTitle;
-
 
 
     @Override
@@ -50,7 +59,14 @@ public class MainActivity extends ActionBarActivity
         setSupportActionBar(toolbar);
 
 
+        DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        toggle = new android.support.v7.app.ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+        toggle.setDrawerIndicatorEnabled(true);
+        drawerLayout.setDrawerListener(toggle);
 
+
+
+        tv_bottom = (TextView)findViewById(R.id.tv_bottom);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -68,16 +84,16 @@ public class MainActivity extends ActionBarActivity
         widget.addDecorator(new PrimeDayDisableDecorator());
         widget.addDecorator(new EnableOneToTenDecorator());
 
-
+        FetchEventsTask fetchEventsTask = new FetchEventsTask();
+        fetchEventsTask.execute();
 
 
     }
 
-
     @Override
     public void onDateChanged(MaterialCalendarView materialCalendarView, CalendarDay calendarDay) {
         String stringDay = String.valueOf(calendarDay);
-        Toast.makeText(this, stringDay,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, stringDay, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -145,7 +161,11 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
-
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        toggle.syncState();
+    }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -204,6 +224,77 @@ public class MainActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public class FetchEventsTask extends AsyncTask<Void,Void,String> {
+        private final String LOG_TAG = FetchEventsTask.class.getSimpleName();
+
+        HttpURLConnection urlConnection = null;
+        BufferedReader reader = null;
+
+        // Will contain the raw JSON response as a string.
+        String eventsJsonStr = null;
+
+        @Override
+        protected String doInBackground(Void...params){
+            try {
+                URL url = new URL("http://evendate.ru/all.json");
+
+                // Create the request and open the connection
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
+
+                //Read the input stream inso String eventsJsonStr
+                InputStream inputStream = urlConnection.getInputStream();
+                StringBuffer buffer = new StringBuffer();
+                if (inputStream == null) {
+                    return null;
+                }
+                reader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line);
+                }
+
+                if (buffer.length() == 0) {
+                    // Stream was empty.  No point in parsing.
+                    return null;
+                }
+
+                eventsJsonStr = buffer.toString();
+                Log.e(LOG_TAG, eventsJsonStr);
+                tv_bottom.setText(eventsJsonStr);
+            }
+
+            catch (IOException e) {
+                Log.e(LOG_TAG, "Error ", e);
+                // If the code didn't successfully get the data, there's no point in attemping
+                // to parse it.
+                return null;
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (final IOException e) {
+                        Log.e(LOG_TAG, "Error closing stream", e);
+                    }
+                }
+            }
+
+            return eventsJsonStr;
+
+
+
+
+
+        }
+
     }
 
 
