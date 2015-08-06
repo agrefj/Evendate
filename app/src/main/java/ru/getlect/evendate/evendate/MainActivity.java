@@ -24,6 +24,10 @@ import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateChangedListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,14 +44,19 @@ public class MainActivity extends ActionBarActivity
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private TextView tv_bottom;
-
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
     private CharSequence mTitle;
-    private DrawerLayout mDrawerLayout;
     private android.support.v7.app.ActionBarDrawerToggle toggle;
-    private CharSequence mDrawerTitle;
+
+    public int[] arrayID = new int[100];
+    public String[] arrayTitle = new String[20];
+    public String[] arrayDescription = new String[20];
+    public String[] arrayEventStartDate = new String[20];
+    public String[] arrayEventEndDate = new String[20];
+    public String[] arrayOrganizationName = new String[20];
+
+    // Will contain the raw JSON response as a string.
+    public String eventsJsonStr = null;
+
 
 
     @Override
@@ -81,8 +90,8 @@ public class MainActivity extends ActionBarActivity
         MaterialCalendarView widget = (MaterialCalendarView) findViewById(R.id.calendarView);
         widget.setOnDateChangedListener(this);
 
-        widget.addDecorator(new PrimeDayDisableDecorator());
-        widget.addDecorator(new EnableOneToTenDecorator());
+        widget.addDecorator(new DisableAllDaysDecorator());
+//        widget.addDecorator(new EnableOneToTenDecorator());
 
         FetchEventsTask fetchEventsTask = new FetchEventsTask();
         fetchEventsTask.execute();
@@ -97,11 +106,11 @@ public class MainActivity extends ActionBarActivity
 
     }
 
-    private static class PrimeDayDisableDecorator implements DayViewDecorator {
+    private static class DisableAllDaysDecorator implements DayViewDecorator {
 
         @Override
         public boolean shouldDecorate(CalendarDay day) {
-            return PRIME_TABLE[day.getDay()];
+            return day.getDay() <=31;
         }
 
         @Override
@@ -109,57 +118,57 @@ public class MainActivity extends ActionBarActivity
             view.setDaysDisabled(true);
         }
 
-        private static boolean[] PRIME_TABLE = {
-                false,  // 0?
-                true,
-                false,// 2
-                false,// 3
-                false,
-                false,// 5
-                false,
-                false,// 7
-                false,
-                false,
-                false,
-                false,// 11
-                false,
-                false,// 13
-                false,
-                false,
-                false,
-                false,// 17
-                false,
-                false,// 19
-                false,
-                false,
-                false,
-                true,// 23
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,// 29
-                false,
-                false,// 31
-                false,
-                false,
-                false, //PADDING
-        };
+//        private static boolean[] PRIME_TABLE = {
+//                false,  // 0?
+//                true,
+//                false,// 2
+//                false,// 3
+//                false,
+//                false,// 5
+//                false,
+//                false,// 7
+//                false,
+//                false,
+//                false,
+//                false,// 11
+//                false,
+//                false,// 13
+//                false,
+//                false,
+//                false,
+//                false,// 17
+//                false,
+//                false,// 19
+//                false,
+//                false,
+//                false,
+//                true,// 23
+//                true,
+//                true,
+//                true,
+//                true,
+//                true,
+//                true,// 29
+//                false,
+//                false,// 31
+//                false,
+//                false,
+//                false, //PADDING
+//        };
     }
 
-    private static class EnableOneToTenDecorator implements DayViewDecorator {
-
-        @Override
-        public boolean shouldDecorate(CalendarDay day) {
-            return day.getDay() <= 10;
-        }
-
-        @Override
-        public void decorate(DayViewFacade view) {
-            view.setDaysDisabled(false);
-        }
-    }
+//    private static class EnableOneToTenDecorator implements DayViewDecorator {
+//
+//        @Override
+//        public boolean shouldDecorate(CalendarDay day) {
+//            return day.getDay() <= 10;
+//        }
+//
+//        @Override
+//        public void decorate(DayViewFacade view) {
+//            view.setDaysDisabled(false);
+//        }
+//    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -179,7 +188,7 @@ public class MainActivity extends ActionBarActivity
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
-
+                
                 break;
             case 2:
 
@@ -233,8 +242,6 @@ public class MainActivity extends ActionBarActivity
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
-        // Will contain the raw JSON response as a string.
-        String eventsJsonStr = null;
 
         @Override
         protected String doInBackground(Void...params){
@@ -265,8 +272,7 @@ public class MainActivity extends ActionBarActivity
                 }
 
                 eventsJsonStr = buffer.toString();
-                Log.e(LOG_TAG, eventsJsonStr);
-                tv_bottom.setText(eventsJsonStr);
+
             }
 
             catch (IOException e) {
@@ -286,16 +292,84 @@ public class MainActivity extends ActionBarActivity
                     }
                 }
             }
-
             return eventsJsonStr;
 
+        }
 
 
+        @Override
+        protected void onPostExecute(String eventsJsonStr){
+        super.onPostExecute(eventsJsonStr);
+
+            Log.e(LOG_TAG, eventsJsonStr);
+
+            JSONObject eventsJSONObject = null;
+
+            //for parsing
+            final String DATA = "data";
+            final String ID = "id";
+            final String TITLE = "title";
+            final String DESCRIPTION = "description";
+            final String EVENT_START = "event_start_date";
+            final String EVENT_END = "event_end_date";
+
+            //for saving
+            Integer data_id = null;
+            String data_title = "";
+            String data_description ="";
+            String data_event_start = "";
+            String data_event_end = "";
+
+
+            try {
+                eventsJSONObject = new JSONObject(eventsJsonStr);
+                JSONArray eventsArray = eventsJSONObject.getJSONArray(DATA);
+
+                JSONObject first_event = eventsArray.getJSONObject(0);
+                data_id = first_event.getInt(ID);
+                data_title = first_event.getString(TITLE);
+                data_description = first_event.getString(DESCRIPTION);
+                data_event_start = first_event.getString(EVENT_START);
+                data_event_end = first_event.getString(EVENT_END);
+
+
+
+                Log.e(LOG_TAG, "FIRST ID: " + data_id);
+                Log.e(LOG_TAG, "FIRST TITLE: " + data_title);
+                Log.e(LOG_TAG, "FIRST DESCRIPTION: " + data_description);
+                Log.e(LOG_TAG, "FIRST EVENT START: " + data_event_start);
+                Log.e(LOG_TAG, "FIRST EVENT END: " + data_event_end);
+
+
+
+
+
+
+
+//                for(int i=0; i<4; i++){
+//
+//
+//                }
+
+
+            }
+
+            catch (JSONException e){
+                e.printStackTrace();
+            }
+
+            catch (NullPointerException e){
+                e.printStackTrace();
+            }
 
 
         }
 
+
+
     }
+
+
 
 
     /**
