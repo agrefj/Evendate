@@ -10,6 +10,7 @@
 
     <color name="background_color">#ff819ab7</color>
     <color name="background_color_all">#ffffffff</color>
+    <color name="drawer_background">#fafafa</color>
     <color name="fab_color">#fffc2969</color>
 
 

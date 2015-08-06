@@ -1,6 +1,7 @@
 package ru.getlect.evendate.evendate;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,7 @@ import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateChangedListener;
+import com.vk.sdk.VKSdk;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,7 +40,7 @@ import java.net.URL;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnDateChangedListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnDateChangedListener, View.OnClickListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -57,7 +60,7 @@ public class MainActivity extends ActionBarActivity
     // Will contain the raw JSON response as a string.
     public String eventsJsonStr = null;
 
-
+    Button btn_VK;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,15 @@ public class MainActivity extends ActionBarActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        VKSdk.initialize(this);
+
+        AuthFragment authFragment = new AuthFragment();
+
+        btn_VK = (Button)findViewById(R.id.btn_VK);
+        btn_VK.setOnClickListener(this);
+
+
 
 
         DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
@@ -104,6 +116,16 @@ public class MainActivity extends ActionBarActivity
         String stringDay = String.valueOf(calendarDay);
         Toast.makeText(this, stringDay, Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_VK:
+                Intent intent = new Intent(this, AuthActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 
     private static class DisableAllDaysDecorator implements DayViewDecorator {
