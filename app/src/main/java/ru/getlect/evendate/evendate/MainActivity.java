@@ -72,7 +72,7 @@ public class MainActivity extends ActionBarActivity
 
         VKSdk.initialize(this);
 
-        AuthFragment authFragment = new AuthFragment();
+
 
         btn_VK = (Button)findViewById(R.id.btn_VK);
         btn_VK.setOnClickListener(this);

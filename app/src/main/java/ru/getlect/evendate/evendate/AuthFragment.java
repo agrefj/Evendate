@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.vk.sdk.VKScope;
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -18,9 +16,7 @@ public class AuthFragment extends Fragment {
 
     Button btn_VK;
 
-    private static final String[] sMyScope = new String[] {
-            VKScope.EMAIL
-    };
+
 
 
     public AuthFragment() {
