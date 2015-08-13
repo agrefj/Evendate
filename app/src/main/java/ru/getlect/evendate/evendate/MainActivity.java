@@ -1,7 +1,6 @@
 package ru.getlect.evendate.evendate;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,7 +24,6 @@ import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateChangedListener;
-import com.vk.sdk.VKSdk;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,9 +40,7 @@ import java.net.URL;
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnDateChangedListener, View.OnClickListener {
 
-    /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
+
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private TextView tv_bottom;
     private CharSequence mTitle;
@@ -70,13 +66,10 @@ public class MainActivity extends ActionBarActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        VKSdk.initialize(this);
-
 
 
         btn_VK = (Button)findViewById(R.id.btn_VK);
         btn_VK.setOnClickListener(this);
-
 
 
 
@@ -122,8 +115,7 @@ public class MainActivity extends ActionBarActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_VK:
-                Intent intent = new Intent(this, AuthActivity.class);
-                startActivity(intent);
+              
                 break;
         }
     }
@@ -323,7 +315,7 @@ public class MainActivity extends ActionBarActivity
         protected void onPostExecute(String eventsJsonStr){
         super.onPostExecute(eventsJsonStr);
 
-            Log.e(LOG_TAG, eventsJsonStr);
+
 
             JSONObject eventsJSONObject = null;
 

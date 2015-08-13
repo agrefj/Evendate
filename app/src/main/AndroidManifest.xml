@@ -21,11 +21,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".AuthActivity"></activity>
 
-        //For VK Auth
-        <activity android:name="com.vk.sdk.VKOpenAuthActivity" />
-        <activity android:name="com.vk.sdk.VKServiceActivity" android:label="ServiceActivity" android:theme="@style/VK.Transparent" />
 
     </application>
 
