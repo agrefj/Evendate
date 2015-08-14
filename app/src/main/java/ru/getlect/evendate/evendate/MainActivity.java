@@ -1,6 +1,7 @@
 package ru.getlect.evendate.evendate;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -115,7 +116,8 @@ public class MainActivity extends ActionBarActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_VK:
-              
+                Intent intent = new Intent(this,WebAuthActivity.class);
+                startActivity(intent);
                 break;
         }
     }
