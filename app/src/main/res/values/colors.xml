@@ -11,7 +11,13 @@
     <color name="background_color">#ff819ab7</color>
     <color name="background_color_all">#ffffffff</color>
     <color name="drawer_background">#fafafa</color>
-    <color name="fab_color">#fffc2969</color>
+    <color name="fab_color">#fc2969</color>
+    <color name="text_color_black">#212121</color>
+
+    <color name="hint_text_color">#9b9b9b</color>
+    <color name="underline_color">#c6c6c6</color>
+
+    <color name="border_line">#e4e4e4</color>
 
 
 

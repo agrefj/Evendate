@@ -11,9 +11,17 @@
     android:background="@color/drawer_background"
     tools:context=".NavigationDrawerFragment" >
 
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="АВТОРИЗАЦИЯ"
         android:id="@+id/btn_VK" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Добавить эвент"
+        android:id="@+id/btn_add_event" />
+
 </LinearLayout>

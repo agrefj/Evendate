@@ -58,6 +58,7 @@ public class MainActivity extends ActionBarActivity
     public String eventsJsonStr = null;
 
     Button btn_VK;
+    Button btn_add_event;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,9 @@ public class MainActivity extends ActionBarActivity
 
         btn_VK = (Button)findViewById(R.id.btn_VK);
         btn_VK.setOnClickListener(this);
+
+        btn_add_event = (Button)findViewById(R.id.btn_add_event);
+        btn_add_event.setOnClickListener(this);
 
 
 
@@ -114,9 +118,14 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onClick(View v) {
+        Intent intent;
         switch (v.getId()) {
             case R.id.btn_VK:
-                Intent intent = new Intent(this,WebAuthActivity.class);
+                intent = new Intent(this,WebAuthActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.btn_add_event:
+                intent = new Intent(this,AddEventActivity.class);
                 startActivity(intent);
                 break;
         }
