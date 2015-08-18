@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.rey.material.app.Dialog;
 import com.rey.material.app.DialogFragment;
 import com.rey.material.app.TimePickerDialog;
+import com.rey.material.widget.Spinner;
 
 import java.text.SimpleDateFormat;
 
@@ -22,6 +23,8 @@ public class DialogsFragment extends Fragment implements View.OnClickListener{
     LinearLayout ll_location;
     LinearLayout ll_photo;
     LinearLayout ll_start_date;
+    Spinner spinner;
+    Toast toast;
 
 
     public static DialogsFragment newInstance() {
@@ -29,15 +32,36 @@ public class DialogsFragment extends Fragment implements View.OnClickListener{
         return fragment;
     }
 
-    private MainActivity mActivity;
+    private AddEventActivity mActivity;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View v = inflater.inflate(R.layout.fragment_dialog, container, false);
+        View v = inflater.inflate(R.layout.add_event, container, false);
 
 
-        mActivity = (MainActivity)getActivity();
+
+        ll_location = (LinearLayout) v.findViewById(R.id.ll_location);
+        ll_location.setOnClickListener(this);
+
+        ll_photo = (LinearLayout)v.findViewById(R.id.ll_photo);
+        ll_photo.setOnClickListener(this);
+
+        ll_start_date = (LinearLayout)v.findViewById(R.id.ll_start_date);
+        ll_start_date.setOnClickListener(this);
+
+//        spinner = (Spinner)v.findViewById(R.id.spinner);
+//        String[] items = new String[5];
+//        int halfHour = 30;
+//        for(int i = 0; i <items.length; i++) {
+//            int time = halfHour * i;
+//            items[i] = "За " + String.valueOf(time) + " минут";}
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.row_spn, items);
+//        adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
+//        spinner.setAdapter(adapter);
+
+
+        mActivity = (AddEventActivity)getActivity();
 
         return v;
     }
@@ -66,9 +90,15 @@ public class DialogsFragment extends Fragment implements View.OnClickListener{
 
                 builder.positiveAction("OK")
                         .negativeAction("CANCEL");
+
+
+
+                toast.makeText(getActivity(), "НАЖАТО ЭТО ДЕРЬМО", Toast.LENGTH_SHORT).show();
                 break;
         }
 
+        DialogFragment fragment = DialogFragment.newInstance(builder);
+        fragment.show(getFragmentManager(),null);
 
 
 
