@@ -1,5 +1,6 @@
 package ru.getlect.evendate.evendate;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -10,7 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.rey.material.app.Dialog;
+import com.rey.material.app.DialogFragment;
+import com.rey.material.app.TimePickerDialog;
 import com.rey.material.widget.Spinner;
+
+import java.text.SimpleDateFormat;
 
 /**
  * Created by fj on 14.08.2015.
@@ -20,6 +26,7 @@ public class AddEventActivity extends ActionBarActivity implements View.OnClickL
     TextView tv_add_event_time;
     LinearLayout ll_location;
     LinearLayout ll_photo;
+    LinearLayout ll_start_date;
     Spinner spinner;
 
     @Override
@@ -41,6 +48,9 @@ public class AddEventActivity extends ActionBarActivity implements View.OnClickL
         ll_photo = (LinearLayout)findViewById(R.id.ll_photo);
         ll_photo.setOnClickListener(this);
 
+        ll_start_date = (LinearLayout)findViewById(R.id.ll_start_date);
+        ll_start_date.setOnClickListener(this);
+
         spinner = (Spinner)findViewById(R.id.spinner);
         String[] items = new String[5];
         int halfHour = 30;
@@ -52,17 +62,15 @@ public class AddEventActivity extends ActionBarActivity implements View.OnClickL
         spinner.setAdapter(adapter);
 
 
+
+
     }
 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.tv_add_event_time:
-                Toast toast;
-                toast = Toast.makeText(getApplicationContext(), "нажато что ль?", Toast.LENGTH_LONG);
-                toast.show();
-                break;
+        Dialog.Builder builder = null;
+        switch (v.getId()) {
             case R.id.ll_location:
                 Intent intent_map_fragment = new Intent(this, MapsActivity.class);
                 startActivity(intent_map_fragment);
@@ -74,8 +82,33 @@ public class AddEventActivity extends ActionBarActivity implements View.OnClickL
                 startActivityForResult(Intent.createChooser(intent,
                         "Complete action using"), 1);
                 break;
+            case R.id.ll_start_date :
+                builder = new TimePickerDialog.Builder(R.style.SimpleDialogLight, 24, 00) {
+                    @Override
+                    public void onPositiveActionClicked(DialogFragment fragment) {
+                        TimePickerDialog dialog = (TimePickerDialog) fragment.getDialog();
+                        super.onPositiveActionClicked(fragment);
+                    }
+
+                    @Override
+                    public void onNegativeActionClicked(DialogFragment fragment) {
+                        super.onNegativeActionClicked(fragment);
+                    }
+                } ;
+
+                builder.positiveAction("OK")
+                        .negativeAction("CANCEL");
+                break;
+
+
 
         }
+
+        DialogFragment fragment = DialogFragment.newInstance(builder);
+        fragment.show(FragmentManager fragmentManager,);
+        fragment.show(getFragmentManager(), null);
+
+
 
     }
 }
