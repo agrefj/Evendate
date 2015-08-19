@@ -20,7 +20,9 @@ public class AddEventActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_event);
+        setContentView(R.layout.dialogs_fragment);
+
+        DialogsFragment dialogsFragment = new DialogsFragment();
 
 //        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar2);
 //        setSupportActionBar(toolbar);
