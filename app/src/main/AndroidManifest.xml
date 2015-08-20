@@ -29,7 +29,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".WebAuthActivity" />
-        <activity android:name=".AddEventActivity" />
+        <activity android:name=".DialogsActivity"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -40,8 +41,10 @@
 
         <activity
             android:name=".MapsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_maps" >
         </activity>
+
 
 
     </application>
