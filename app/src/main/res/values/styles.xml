@@ -95,4 +95,16 @@
         <item name="di_messageTextColor">@color/text_color_black</item>
     </style>
 
+    <style name="Evendate.Switch.On" parent="Material.Widget.Switch">
+        <item name="sw_trackColor">#f791b0</item>
+        <item name="sw_thumbColor">#fc2969</item>
+
+    </style>
+
+    <style name="Evendate.Switch.Off" parent="Material.Widget.Switch">
+        <item name="sw_trackColor">#c6c5c5</item>
+        <item name="sw_thumbColor">#f1f1f1</item>
+
+    </style>
+
 </resources>

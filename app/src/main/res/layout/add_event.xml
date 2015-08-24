@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -51,12 +50,6 @@
                 android:textColor="@color/text_color_black"
                 />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:orientation="horizontal"
-                android:id="@+id/border5"
-                android:background="@color/border_line"></LinearLayout>
 
 
 
@@ -69,13 +62,13 @@
              <ImageView
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
-                 android:layout_weight="2"
+                 android:layout_weight="3.5"
                  android:src="@drawable/clock"/>
 
              <TextView
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
-                 android:layout_weight="1"
+                 android:layout_weight="2"
                  android:text="Весь день"
                  android:textColor="@color/text_color_black"
                  android:layout_gravity="center_vertical"
@@ -83,15 +76,15 @@
                  />
 
              <com.rey.material.widget.Switch
-                 style="@style/Material.Widget.Switch"
+                 style="@style/Evendate.Switch.Off"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:layout_gravity="center_vertical"
-                 android:layout_weight="2"
-                 sw_trackColor = "@color/fab_color"
-                 sw_thumbColor = "@color/fab_color"
+                 android:layout_weight="4"
                  android:gravity="center"
-                 android:checked="false" />
+                 android:checked="false"
+                 android:id="@+id/switch_all_day"
+                  />
 
         </LinearLayout>
 
@@ -192,7 +185,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="Укажите место"
-                    android:textSize="20dp"
                     android:textColor="@color/text_color_black"
                     android:gravity="center_vertical" />
             </LinearLayout>
@@ -226,7 +218,8 @@
                    android:text="Выберите напоминания"
                    android:textColor="@color/text_color_black"
                    android:id="@+id/tv_notifications"
-                   android:layout_weight="1" />
+                   android:layout_weight="1"
+                   android:gravity="center_vertical"/>
 
 
             </LinearLayout>
@@ -259,7 +252,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:id="@+id/tv_description"
-                    android:textColor="@color/text_color_black"
+                    android:textColor="#bdbdbd"
                     android:text="Добавить описание"
                     android:maxLength="500"
                     android:gravity="center_vertical"
@@ -297,7 +290,6 @@
                     android:layout_weight="1"
                     android:textColor="@color/text_color_black"
                     android:text="Добавить изображение"
-                    android:textSize="20dp"
                     android:gravity="center_vertical"
                     />
 

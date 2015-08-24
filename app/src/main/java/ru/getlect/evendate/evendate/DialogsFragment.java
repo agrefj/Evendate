@@ -16,13 +16,14 @@ import com.rey.material.app.DialogFragment;
 import com.rey.material.app.SimpleDialog;
 import com.rey.material.app.TimePickerDialog;
 import com.rey.material.widget.EditText;
+import com.rey.material.widget.Switch;
 
 import java.text.SimpleDateFormat;
 
 /**
  * Created by fj on 17.08.2015.
  */
-public class DialogsFragment extends Fragment implements View.OnClickListener{
+public class DialogsFragment extends Fragment implements View.OnClickListener, Switch.OnCheckedChangeListener {
 
     LinearLayout ll_location;
     LinearLayout ll_photo;
@@ -36,8 +37,8 @@ public class DialogsFragment extends Fragment implements View.OnClickListener{
     TextView event_end_time;
     TextView tv_notifications;
     TextView tv_description;
-    String descriptionSaved;
     EditText et_desc_input;
+    Switch switch_all_day;
 
     public static DialogsFragment newInstance() {
         DialogsFragment fragment = new DialogsFragment();
@@ -66,7 +67,8 @@ public class DialogsFragment extends Fragment implements View.OnClickListener{
         event_start_time = (TextView)v.findViewById(R.id.event_start_time);
         event_end_date = (TextView)v.findViewById(R.id.event_end_date);
         event_end_time = (TextView)v.findViewById(R.id.event_end_time);
-        
+
+        et_desc_input = (EditText)v.findViewById(R.id.et_desc_input);
 
         event_start_date.setOnClickListener(this);
         event_start_time.setOnClickListener(this);
@@ -85,9 +87,11 @@ public class DialogsFragment extends Fragment implements View.OnClickListener{
         tv_notifications = (TextView)v.findViewById(R.id.tv_notifications);
         tv_description = (TextView)v.findViewById(R.id.tv_description);
 
+        switch_all_day = (Switch)v.findViewById(R.id.switch_all_day);
+        switch_all_day.setOnCheckedChangeListener(this);
+
 
         mActivity = (DialogsActivity)getActivity();
-        String descriptionSaved = "";
 
 
 
@@ -193,7 +197,6 @@ public class DialogsFragment extends Fragment implements View.OnClickListener{
                     public void onPositiveActionClicked(DialogFragment fragment) {
                         CharSequence[] values =  getSelectedValues();
 
-
                         super.onPositiveActionClicked(fragment);
                     }
 
@@ -206,6 +209,7 @@ public class DialogsFragment extends Fragment implements View.OnClickListener{
                 ((SimpleDialog.Builder)builder).multiChoiceItems(
                         new String[]{"За 2 часа", "За день", "За три дня", "За неделю"} )
                         .title("Выберите напоминания")
+                       // .contentView(R.layout.layout_event_notifications)
                         .positiveAction("Ок")
                         .negativeAction("Отмена");
 
@@ -224,6 +228,7 @@ public class DialogsFragment extends Fragment implements View.OnClickListener{
                     public void onPositiveActionClicked(DialogFragment fragment) {
                         com.rey.material.widget.EditText et_description = (com.rey.material.widget.EditText)fragment.getDialog().findViewById(R.id.et_description);
                         String description = et_description.getText().toString();
+                        tv_description.setTextColor(getResources().getColor(R.color.text_color_black));
                         tv_description.setText(description);
                         super.onPositiveActionClicked(fragment);
                     }
@@ -268,14 +273,17 @@ public class DialogsFragment extends Fragment implements View.OnClickListener{
     }
 
 
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public void onCheckedChanged(Switch aSwitch, boolean b) {
+        if(b==true){
+            switch_all_day.applyStyle(R.style.Evendate_Switch_On);
+            event_start_time.setVisibility(View.GONE);
+            event_end_time.setVisibility(View.GONE);
+        }
+        if(b==false) {
+            switch_all_day.applyStyle(R.style.Evendate_Switch_Off);
+            event_start_time.setVisibility(View.VISIBLE);
+            event_end_time.setVisibility(View.VISIBLE);
+        }
+    }
 }
