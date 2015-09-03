@@ -125,7 +125,7 @@ public class MainActivity extends ActionBarActivity
                 startActivity(intent);
                 break;
             case R.id.btn_add_event:
-                intent = new Intent(this,DialogsActivity.class);
+                intent = new Intent(this,AddEventActivity.class);
                 startActivity(intent);
                 break;
         }
@@ -267,7 +267,6 @@ public class MainActivity extends ActionBarActivity
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
-
         @Override
         protected String doInBackground(Void...params){
             try {
@@ -320,6 +319,7 @@ public class MainActivity extends ActionBarActivity
             return eventsJsonStr;
 
         }
+
 
 
         @Override

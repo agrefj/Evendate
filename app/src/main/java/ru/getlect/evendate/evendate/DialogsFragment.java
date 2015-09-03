@@ -10,6 +10,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.EntypoModule;
+import com.joanzapata.iconify.fonts.FontAwesomeModule;
+import com.joanzapata.iconify.fonts.IoniconsModule;
+import com.joanzapata.iconify.fonts.MaterialModule;
+import com.joanzapata.iconify.fonts.MeteoconsModule;
+import com.joanzapata.iconify.fonts.SimpleLineIconsModule;
+import com.joanzapata.iconify.fonts.TypiconsModule;
+import com.joanzapata.iconify.fonts.WeathericonsModule;
 import com.rey.material.app.DatePickerDialog;
 import com.rey.material.app.Dialog;
 import com.rey.material.app.DialogFragment;
@@ -45,12 +54,22 @@ public class DialogsFragment extends Fragment implements View.OnClickListener, S
         return fragment;
     }
 
-    private DialogsActivity mActivity;
+    private AddEventActivity mActivity;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.add_event, container, false);
+
+        Iconify
+                .with(new FontAwesomeModule())
+                .with(new EntypoModule())
+                .with(new TypiconsModule())
+                .with(new MaterialModule())
+                .with(new MeteoconsModule())
+                .with(new WeathericonsModule())
+                .with(new SimpleLineIconsModule())
+                .with(new IoniconsModule());
 
 
 
@@ -91,12 +110,14 @@ public class DialogsFragment extends Fragment implements View.OnClickListener, S
         switch_all_day.setOnCheckedChangeListener(this);
 
 
-        mActivity = (DialogsActivity)getActivity();
+        mActivity = (AddEventActivity)getActivity();
 
 
 
         return v;
     }
+
+
 
 
     @Override
