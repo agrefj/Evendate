@@ -6,8 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
 
 import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+
+import ru.getlect.evendate.evendate.utils.Utilities;
 
 /**
  * Created by Dmitry on 02.09.2015.
@@ -109,18 +109,6 @@ public class TestDb extends AndroidTestCase {
 
         return testValues;
     }
-    static void validateCurrentRecord(String error, Cursor valueCursor, ContentValues expectedValues) {
-        Set<Map.Entry<String, Object>> valueSet = expectedValues.valueSet();
-        for (Map.Entry<String, Object> entry : valueSet) {
-            String columnName = entry.getKey();
-            int idx = valueCursor.getColumnIndex(columnName);
-            assertFalse("Column '" + columnName + "' not found. " + error, idx == -1);
-            String expectedValue = entry.getValue().toString();
-            assertEquals("Value '" + entry.getValue().toString() +
-                    "' did not match the expected value '" +
-                    expectedValue + "'. " + error, expectedValue, valueCursor.getString(idx));
-        }
-    }
     public long insertOrganization() {
         // First step: Get reference to writable database
         // If there's an error in those massive SQL table creation Strings,
@@ -158,7 +146,7 @@ public class TestDb extends AndroidTestCase {
         assertTrue( "Error: No Records returned from location query", cursor.moveToFirst() );
 
         // Fifth Step: Validate data in resulting Cursor with the original ContentValues
-        validateCurrentRecord("Error: Location Query Validation Failed",
+        Utilities.validateCurrentRecord("Error: Location Query Validation Failed",
                 cursor, testValues);
 
         // Move the cursor to demonstrate that there is only one record in the database
@@ -170,7 +158,50 @@ public class TestDb extends AndroidTestCase {
         db.close();
         return locationRowId;
     }
+    public void testOrganizationTable(){
+        insertOrganization();
+    }
     public void testEventsTable() {
         long locationRowId = insertOrganization();
+        // Make sure we have a valid row ID.
+        assertFalse("Error: Location Not Inserted Correctly", locationRowId == -1L);
+
+        // First step: Get reference to writable database
+        // If there's an error in those massive SQL table creation Strings,
+        // errors will be thrown here when you try to get a writable database.
+        SQLiteDatabase db = new EvendateDBHelper(this.mContext)
+                .getWritableDatabase();
+
+        // Second Step
+        ContentValues eventsValues = Utilities.createEvent(locationRowId);
+
+        long eventsRowId = db.insert(EvendateContract.EventEntry.TABLE_NAME, null, eventsValues);
+        assertTrue(eventsRowId != -1);
+        // Fourth Step: Query the database and receive a Cursor back
+        // A cursor is your primary interface to the query results.
+        Cursor eventsCursor = db.query(
+                EvendateContract.EventEntry.TABLE_NAME,  // Table to Query
+                null, // leaving "columns" null just returns all the columns.
+                null, // cols for "where" clause
+                null, // values for "where" clause
+                null, // columns to group by
+                null, // columns to filter by row groups
+                null  // sort order
+        );
+
+        // Move the cursor to the first valid database row and check to see if we have any rows
+        assertTrue( "Error: No Records returned from location query", eventsCursor.moveToFirst() );
+
+        // Fifth Step: Validate the location Query
+        Utilities.validateCurrentRecord("testInsertReadDb weatherEntry failed to validate",
+                eventsCursor, eventsValues);
+
+        // Move the cursor to demonstrate that there is only one record in the database
+        assertFalse("Error: More than one record returned from weather query",
+                eventsCursor.moveToNext());
+
+        // Sixth Step: Close cursor and database
+        eventsCursor.close();
+        db.close();
     }
 }

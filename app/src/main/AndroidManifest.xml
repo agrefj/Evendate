@@ -44,7 +44,12 @@
             android:screenOrientation="portrait"
             android:label="@string/title_activity_maps" >
         </activity>
-
+        
+        <provider
+            android:authorities="ru.getlect.evendate.evendate"
+            android:name=".data.EvendateProvider"
+            android:exported="false">
+        </provider>
 
 
 
