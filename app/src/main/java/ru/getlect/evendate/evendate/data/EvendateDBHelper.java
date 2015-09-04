@@ -30,12 +30,12 @@ public class EvendateDBHelper extends SQLiteOpenHelper {
                 EventEntry.COLUMN_DESCRIPTION + " LONGTEXT, " +
                 EventEntry.COLUMN_LOCATION_TEXT + " LONGTEXT, " +
                 EventEntry.COLUMN_LOCATION_URI + " LONGTEXT, " +
-                EventEntry.COLUMN_START_DATE + " DATETIME NOT NULL, " +
+                EventEntry.COLUMN_START_DATE + " DATE NOT NULL, " +
                 EventEntry.COLUMN_NOTIFICATIONS + " INTEGER, " +
                 EventEntry.COLUMN_ORGANIZATION_ID + " INTEGER NOT NULL, " +
                 EventEntry.COLUMN_LATITUDE + " REAL, " +
                 EventEntry.COLUMN_LONGITUDE + " REAL, " +
-                EventEntry.COLUMN_END_DATE + " DATETIME NOT NULL, " +
+                EventEntry.COLUMN_END_DATE + " DATE NOT NULL, " +
                 EventEntry.COLUMN_IMAGE_VERTICAL_URL + " LONGTEXT, " +
                 EventEntry.COLUMN_DETAIL_INFO_URL + " LONGTEXT, " +
                 EventEntry.COLUMN_BEGIN_TIME + " TIME, " +
@@ -70,7 +70,7 @@ public class EvendateDBHelper extends SQLiteOpenHelper {
                         OrganizationEntry.COLUMN_IMG_URL + " LONGTEXT, " +
                         OrganizationEntry.COLUMN_IMG + " VARCHAR(255), " +
                         OrganizationEntry.COLUMN_SHORT_NAME + " VARCHAR(255), " +
-                        OrganizationEntry.COLUMN_BACKGROUND_IMG_URL + "LONGTEXT, " +
+                        OrganizationEntry.COLUMN_BACKGROUND_IMG_URL + " LONGTEXT, " +
                         OrganizationEntry.COLUMN_DESCRIPTION + " LONGTEXT, " +
                         OrganizationEntry.COLUMN_TYPE_NAME + " VARCHAR(255), " +
                         OrganizationEntry.COLUMN_TYPE_ID + " INTEGER" +
