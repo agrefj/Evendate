@@ -19,6 +19,7 @@ import com.joanzapata.iconify.fonts.MeteoconsModule;
 import com.joanzapata.iconify.fonts.SimpleLineIconsModule;
 import com.joanzapata.iconify.fonts.TypiconsModule;
 import com.joanzapata.iconify.fonts.WeathericonsModule;
+import com.joanzapata.iconify.widget.IconTextView;
 import com.rey.material.app.DatePickerDialog;
 import com.rey.material.app.Dialog;
 import com.rey.material.app.DialogFragment;
@@ -48,6 +49,7 @@ public class DialogsFragment extends Fragment implements View.OnClickListener, S
     TextView tv_description;
     EditText et_desc_input;
     Switch switch_all_day;
+    IconTextView itv_all_day;
 
     public static DialogsFragment newInstance() {
         DialogsFragment fragment = new DialogsFragment();
@@ -108,6 +110,10 @@ public class DialogsFragment extends Fragment implements View.OnClickListener, S
 
         switch_all_day = (Switch)v.findViewById(R.id.switch_all_day);
         switch_all_day.setOnCheckedChangeListener(this);
+
+        itv_all_day = (IconTextView)v.findViewById(R.id.itv_all_day);
+        itv_all_day.setText("{md-access-time}");
+
 
 
         mActivity = (AddEventActivity)getActivity();

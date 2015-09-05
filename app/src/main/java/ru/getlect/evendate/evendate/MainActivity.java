@@ -1,7 +1,6 @@
 package ru.getlect.evendate.evendate;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +37,7 @@ import java.net.URL;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnDateChangedListener, View.OnClickListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnDateChangedListener {
 
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
@@ -57,8 +55,6 @@ public class MainActivity extends ActionBarActivity
     // Will contain the raw JSON response as a string.
     public String eventsJsonStr = null;
 
-    Button btn_VK;
-    Button btn_add_event;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,15 +63,6 @@ public class MainActivity extends ActionBarActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
-        btn_VK = (Button)findViewById(R.id.btn_VK);
-        btn_VK.setOnClickListener(this);
-
-        btn_add_event = (Button)findViewById(R.id.btn_add_event);
-        btn_add_event.setOnClickListener(this);
-
 
 
         DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
@@ -116,20 +103,6 @@ public class MainActivity extends ActionBarActivity
 
     }
 
-    @Override
-    public void onClick(View v) {
-        Intent intent;
-        switch (v.getId()) {
-            case R.id.btn_VK:
-                intent = new Intent(this,WebAuthActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.btn_add_event:
-                intent = new Intent(this,AddEventActivity.class);
-                startActivity(intent);
-                break;
-        }
-    }
 
     private static class DisableAllDaysDecorator implements DayViewDecorator {
 
