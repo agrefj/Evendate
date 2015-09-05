@@ -1,23 +1,32 @@
 package ru.getlect.evendate.evendate.data;
 
+import android.content.ContentResolver;
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
  * Created by Dmitry on 02.09.2015.
  */
 public class EvendateContract {
-    //public static final String CONTENT_AUTHORITY = "ru.getlect.evendate.evendate.data";
-    //public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+    public static final String CONTENT_AUTHORITY = "ru.getlect.evendate.evendate";
+    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
-    //public static final String PATH_EVENTS = "events";
-    //public static final String PATH_EVENTS_TAGS = "events_tags";
-    //public static final String PATH_FAVORITE_EVENTS = "favorite_events";
-    //public static final String PATH_ORGANIZATIONS = "organizations";
-    //public static final String PATH_SUBSCRIPTIONS = "subscriptions";
-    //public static final String PATH_TAGS = "tags";
-    //public static final String PATH_USERS = "users";
+    public static final String PATH_EVENTS = "events";
+    public static final String PATH_EVENTS_TAGS = "events_tags";
+    public static final String PATH_FAVORITE_EVENTS = "favorite_events";
+    public static final String PATH_ORGANIZATIONS = "organizations";
+    public static final String PATH_SUBSCRIPTIONS = "subscriptions";
+    public static final String PATH_TAGS = "tags";
+    public static final String PATH_USERS = "users";
 
     public static final class EventEntry implements BaseColumns{
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_EVENTS).build();
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EVENTS;
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EVENTS;
+
         public static final String TABLE_NAME = "events";
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_DESCRIPTION = "description";
@@ -37,6 +46,8 @@ public class EvendateContract {
         public static final String COLUMN_END_TIME = "end_time";
     }
     public static final class EventTagEntry implements BaseColumns{
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_EVENTS_TAGS).build();
         public static final String TABLE_NAME = "events_tags";
         public static final String COLUMN_EVENT_ID = "event_id";
         public static final String COLUMN_TAG_ID = "tag_id";
