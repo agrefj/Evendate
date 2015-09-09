@@ -72,59 +72,9 @@ public class EvendateSyncAdapter extends AbstractThreadedSyncAdapter {
             ContentProviderClient provider,
             SyncResult syncResult) {
 
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
-        String eventsJsonStr = null;
-
-        try {
-            URL url = new URL("http://evendate.ru/all.json");
-
-            // Create the request and open the connection
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
-
-            //Read the input stream inso String eventsJsonStr
-            InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
-            if (inputStream == null) {
-                return;
-            }
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                buffer.append(line);
-            }
-
-            if (buffer.length() == 0) {
-                // Stream was empty.  No point in parsing.
-                return;
-            }
-
-            eventsJsonStr = buffer.toString();
-            Log.w(LOG_TAG, eventsJsonStr);
-
-        }
-
-        catch (IOException e) {
-            Log.e(LOG_TAG, "Error ", e);
-            // If the code didn't successfully get the data, there's no point in attemping
-            // to parse it.
-            return;
-        } finally {
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (final IOException e) {
-                    Log.e(LOG_TAG, "Error closing stream", e);
-                }
-            }
-        }
-
+        //token here
+        String basicAuth = "";
+        getEvents(basicAuth);
     }
 
     /**
@@ -191,5 +141,62 @@ public class EvendateSyncAdapter extends AbstractThreadedSyncAdapter {
     }
     public static void initializeSyncAdapter(Context context) {
         getSyncAccount(context);
+    }
+
+    private void getEvents(String token){
+        HttpURLConnection urlConnection = null;
+        BufferedReader reader = null;
+        String eventsJsonStr = null;
+
+        try {
+            URL url = new URL("http://evendate.ru/api/events");
+
+            // Create the request and open the connection
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setRequestProperty("Authorization", token);
+            urlConnection.connect();
+
+            //Read the input stream inso String eventsJsonStr
+            InputStream inputStream = urlConnection.getInputStream();
+            StringBuilder buffer = new StringBuilder();
+            if (inputStream == null) {
+                return;
+            }
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                buffer.append(line);
+            }
+
+            if (buffer.length() == 0) {
+                // Stream was empty.  No point in parsing.
+                return;
+            }
+
+            eventsJsonStr = buffer.toString();
+            Log.w(LOG_TAG, eventsJsonStr);
+            //TODO parsing
+
+        }
+
+        catch (IOException e) {
+            Log.e(LOG_TAG, "Error ", e);
+            // If the code didn't successfully get the data, there's no point in attemping
+            // to parse it.
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (final IOException e) {
+                    Log.e(LOG_TAG, "Error closing stream", e);
+                }
+            }
+        }
+
     }
 }
