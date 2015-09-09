@@ -65,16 +65,16 @@ public class EvendateDBHelper extends SQLiteOpenHelper {
                 " );";
         final String SQL_CREATE_ORGANIZATIONS_TABLE =
                 "CREATE TABLE " + OrganizationEntry.TABLE_NAME + " (" +
-                        OrganizationEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        OrganizationEntry.COLUMN_NAME + " VARCHAR(255), " +
-                        OrganizationEntry.COLUMN_IMG_URL + " LONGTEXT, " +
-                        OrganizationEntry.COLUMN_IMG + " VARCHAR(255), " +
-                        OrganizationEntry.COLUMN_SHORT_NAME + " VARCHAR(255), " +
-                        OrganizationEntry.COLUMN_BACKGROUND_IMG_URL + " LONGTEXT, " +
-                        OrganizationEntry.COLUMN_DESCRIPTION + " LONGTEXT, " +
-                        OrganizationEntry.COLUMN_TYPE_NAME + " VARCHAR(255), " +
-                        OrganizationEntry.COLUMN_TYPE_ID + " INTEGER" +
-                " );";
+                OrganizationEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                OrganizationEntry.COLUMN_ORGANIZATION_ID + " INTEGER, " +
+                OrganizationEntry.COLUMN_NAME + " TEXT, " +
+                OrganizationEntry.COLUMN_IMG_URL + " TEXT, " +
+                OrganizationEntry.COLUMN_SHORT_NAME + " VARCHAR(50), " +
+                OrganizationEntry.COLUMN_DESCRIPTION + " TEXT, " +
+                OrganizationEntry.COLUMN_TYPE_NAME + " TEXT, " +
+                OrganizationEntry.COLUMN_SUBSCRIBED_COUNT + " INTEGER," +
+                " UNIQUE (" + OrganizationEntry.COLUMN_ORGANIZATION_ID +
+                ") ON CONFLICT REPLACE);";
         final String SQL_CREATE_SUBSCRIPTIONS_TABLE =
                 "CREATE TABLE " + SubscriptionEntry.TABLE_NAME + " (" +
                 SubscriptionEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +

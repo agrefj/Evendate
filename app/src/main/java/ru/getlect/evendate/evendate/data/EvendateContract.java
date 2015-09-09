@@ -58,15 +58,20 @@ public class EvendateContract {
         public static final String COLUMN_EVENT_DATE = "event_date";
     }
     public static final class OrganizationEntry implements BaseColumns{
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_ORGANIZATIONS).build();
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/organizations";
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/organization";
         public static final String TABLE_NAME = "organizations";
+        public static final String COLUMN_ORGANIZATION_ID = "organization_id";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_IMG_URL = "img_url";
-        public static final String COLUMN_IMG = "img";
         public static final String COLUMN_SHORT_NAME = "short_name";
-        public static final String COLUMN_BACKGROUND_IMG_URL = "background_img_url";
         public static final String COLUMN_DESCRIPTION = "description";
         public static final String COLUMN_TYPE_NAME = "type_name";
-        public static final String COLUMN_TYPE_ID = "type_id";
+        public static final String COLUMN_SUBSCRIBED_COUNT = "subscribed_count";
     }
     public static final class SubscriptionEntry implements BaseColumns{
         public static final String TABLE_NAME = "subscriptions";
