@@ -37,6 +37,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import ru.getlect.evendate.evendate.sync.EvendateSyncAdapter;
+
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnDateChangedListener, View.OnClickListener {
@@ -103,8 +105,10 @@ public class MainActivity extends ActionBarActivity
         widget.addDecorator(new DisableAllDaysDecorator());
 //        widget.addDecorator(new EnableOneToTenDecorator());
 
-        FetchEventsTask fetchEventsTask = new FetchEventsTask();
-        fetchEventsTask.execute();
+        // инициализация синхронизации, создание аккаунта
+        EvendateSyncAdapter.initializeSyncAdapter(this);
+        //FetchEventsTask fetchEventsTask = new FetchEventsTask();
+        //fetchEventsTask.execute();
 
 
     }
