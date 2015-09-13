@@ -24,6 +24,8 @@ public class WebAuthActivity extends Activity {
 
     public WebView myWebView;
     Intent intent ;
+    public String token;
+    public String mail;
 
 
 
@@ -93,8 +95,13 @@ public class WebAuthActivity extends Activity {
                 currentURL = new URL(url);
                 if(currentURL.getPath().equals(ouath)){
                     String query = currentURL.getQuery();
-                    Log.e(LOG_TAG,query);
+                    Log.e("ТОКЕН", query);
                     startActivity(intent);
+                    int start = query.indexOf("=");
+                    int end = query.indexOf("&email");
+                    token = query.substring(start + 1,end);
+                    Log.e("ТОкен", token);
+
                 }
             } catch (MalformedURLException e) {
                 e.printStackTrace();

@@ -1,38 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background_color_all"
-    >
 
-    <android.support.v7.widget.Toolbar
-        android:layout_height="wrap_content"
+
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:id="@+id/toolbar2"
-        android:minHeight="?attr/actionBarSize"
-        android:background="@color/primary_color"
+        android:layout_height="match_parent"
+        android:background="@color/background_color_all"
         >
 
-        <LinearLayout
+        <android.support.v7.widget.Toolbar
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:id="@+id/toolbar2"
+            android:minHeight="?attr/actionBarSize"
+            android:background="@color/primary_color"
+            >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize = "20dp"
-                android:textColor="@color/background_color_all"
-                android:text="Новое"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize = "20dp"
+                    android:textColor="@color/background_color_all"
+                    android:text="Новое"/>
 
-    </android.support.v7.widget.Toolbar>
+            </LinearLayout>
+
+        </android.support.v7.widget.Toolbar>
 
 
         <LinearLayout
@@ -46,18 +48,26 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:textColorHint="@color/hint_text_color"
+                android:background="#00000000"
                 android:hint="Введите название"
                 android:textColor="@color/text_color_black"
                 />
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:orientation="horizontal"
+                android:background="@color/border_line"></LinearLayout>
+
+
 
 
             <LinearLayout
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:layout_weight="1"
-             android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
                 >
 
 
@@ -65,31 +75,34 @@
                 <com.joanzapata.iconify.widget.IconTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3.5"
+                    android:layout_weight="5"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
                     android:id="@+id/itv_all_day"
-                    android:text=""
-                    android:textSize="50dp"
+                    android:textSize="25dp"
                     android:textColor="@color/icons_color" />
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.9"
+                    android:layout_gravity="center_vertical"
                     android:text="Весь день"
                     android:textColor="@color/text_color_black"
-                    android:gravity="center_horizontal"
-                    android:layout_gravity="center" />
+                    android:gravity="center_vertical" />
 
 
-             <com.rey.material.widget.Switch
-                 style="@style/Evendate.Switch.Off"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:checked="false"
-                 android:id="@+id/switch_all_day"
-                 android:layout_gravity="center_vertical" />
+                <com.rey.material.widget.Switch
+                    style="@style/Evendate.Switch.Off"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:id="@+id/switch_all_day"
+                    android:layout_gravity="center_vertical" />
 
-        </LinearLayout>
+            </LinearLayout>
 
 
             <LinearLayout
@@ -101,13 +114,18 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp">
 
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:text=""
+                    android:textSize="25dp" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:textSize="20dp"
                     android:id="@+id/event_start_date"
+                    android:layout_weight="2.2"
                     android:text="1 января 1999"
                     android:textColor="@color/text_color_black"/>
 
@@ -115,9 +133,9 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textSize="20dp"
                     android:id="@+id/event_start_time"
+                    android:layout_weight="4.7"
+                    android:layout_marginRight="10dp"
                     android:gravity="center_horizontal"
                     android:text="10:00"
                     android:textColor="@color/text_color_black"/>
@@ -134,12 +152,17 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp">
 
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:textSize="25dp" />
+
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textSize="20dp"
-                    android:gravity="center_horizontal"
+                    android:layout_weight="2.2"
                     android:id="@+id/event_end_date"
                     android:text="1 января 1999"
                     android:textColor="@color/text_color_black"/>
@@ -147,10 +170,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textSize="20dp"
-                    android:layout_weight="1"
+                    android:layout_weight="4.7"
                     android:id="@+id/event_end_time"
                     android:gravity="center_horizontal"
+                    android:layout_marginRight="10dp"
                     android:text="10:00"
                     android:textColor="@color/text_color_black"/>
 
@@ -162,10 +185,26 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="1dp"
                 android:orientation="horizontal"
                 android:id="@+id/border1"
-                android:background="@color/border_line"></LinearLayout>
+                >
+
+                <LinearLayout
+                    android:layout_weight="5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:background="@color/border_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -176,12 +215,17 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp">
 
-                <ImageView
+                <com.joanzapata.iconify.widget.IconTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:src="@drawable/place"
-                    />
+                    android:layout_weight="5"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="25dp"
+                    android:id="@+id/itv_place"
+                    android:textColor="@color/icons_color" />
+
+
 
                 <TextView
                     android:layout_width="match_parent"
@@ -189,15 +233,35 @@
                     android:layout_weight="1"
                     android:text="Укажите место"
                     android:textColor="@color/text_color_black"
-                    android:gravity="center_vertical" />
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"/>
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="1dp"
                 android:orientation="horizontal"
                 android:id="@+id/border2"
-                android:background="@color/border_line"></LinearLayout>
+                >
+
+                <LinearLayout
+                    android:layout_weight="5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:background="@color/border_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </LinearLayout>
+            </LinearLayout>
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -208,31 +272,52 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp">
 
-                <ImageView
+                <com.joanzapata.iconify.widget.IconTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:src="@drawable/notifications"
-                    />
+                    android:layout_weight="5"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="25dp"
+                    android:id="@+id/itv_notifications"
+                    android:textColor="@color/icons_color" />
 
-               <TextView
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"
-                   android:text="Выберите напоминания"
-                   android:textColor="@color/text_color_black"
-                   android:id="@+id/tv_notifications"
-                   android:layout_weight="1"
-                   android:gravity="center_vertical"/>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Выберите напоминания"
+                    android:textColor="@color/text_color_black"
+                    android:id="@+id/tv_notifications"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"/>
 
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="1dp"
                 android:orientation="horizontal"
-                android:id="@+id/border4"
-                android:background="@color/border_line"></LinearLayout>
+                >
+
+                <LinearLayout
+                    android:layout_weight="5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:background="@color/border_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -243,12 +328,16 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp">
 
-                <ImageView
+                <com.joanzapata.iconify.widget.IconTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:src="@drawable/description"
-                    />
+                    android:layout_weight="5"
+                    android:textSize="25dp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/itv_description"
+                    android:textColor="@color/icons_color" />
+
 
                 <TextView
                     android:layout_width="match_parent"
@@ -259,6 +348,7 @@
                     android:text="Добавить описание"
                     android:maxLength="500"
                     android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
                     />
 
 
@@ -267,10 +357,25 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="1dp"
                 android:orientation="horizontal"
-                android:id="@+id/border3"
-                android:background="@color/border_line"></LinearLayout>
+                >
+
+                <LinearLayout
+                    android:layout_weight="5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:background="@color/border_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -280,12 +385,16 @@
                 android:layout_weight="1"
                 android:layout_marginTop="10dp">
 
-                <ImageView
+                <com.joanzapata.iconify.widget.IconTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:src="@drawable/photo"
-                    />
+                    android:layout_weight="5"
+                    android:textSize="25dp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/itv_image"
+                    android:textColor="@color/icons_color" />
+
 
                 <TextView
                     android:layout_width="match_parent"
@@ -294,7 +403,8 @@
                     android:textColor="@color/text_color_black"
                     android:text="Добавить изображение"
                     android:gravity="center_vertical"
-                    />
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/tv_imageAdded" />
 
 
 
@@ -304,7 +414,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"></LinearLayout>
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/ivChoosed"
+                    />
+
+            </LinearLayout>
 
 
 
@@ -325,4 +443,7 @@
 
 
 
-</LinearLayout>
+    </LinearLayout>
+
+
+
