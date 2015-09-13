@@ -13,6 +13,7 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
 
     <application
         android:allowBackup="true"
@@ -57,9 +58,30 @@
         <provider
             android:authorities="ru.getlect.evendate.evendate"
             android:name=".data.EvendateProvider"
-            android:exported="false">
+            android:exported="false"
+            android:syncable="true">
         </provider>
-
+        <service
+            android:name=".sync.EvendateAuthenticatorService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/evendate_authenticator" />
+        </service>
+        <service
+            android:name=".sync.EvendateSyncService"
+            android:exported="false"
+            >
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/evendate_sync_adapter" />
+        </service>
 
 
 

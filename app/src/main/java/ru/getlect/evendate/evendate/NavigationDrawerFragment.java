@@ -1,7 +1,6 @@
 package ru.getlect.evendate.evendate;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -20,14 +19,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import ru.getlect.evendate.evendate.Authorization.AccountChooser;
-
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends Fragment implements View.OnClickListener {
+public class NavigationDrawerFragment extends Fragment {
 
     /**
      * Remember the position of the selected item.
@@ -58,8 +55,6 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
     private boolean mUserLearnedDrawer;
 
     Button btn_VK;
-    Button btn_add_event;
-
 
     public NavigationDrawerFragment() {
     }
@@ -81,26 +76,9 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
 
         // Select either the default item (0) or the last selected item.
         selectItem(mCurrentSelectedPosition);
-
-
-
     }
 
-    @Override
-    public void onClick(View v) {
-        Intent intent;
-        switch (v.getId()) {
-            case R.id.btn_VK:
-                intent = new Intent(getActivity(),AccountChooser.class);
 
-                startActivity(intent);
-                break;
-            case R.id.btn_add_event:
-                intent = new Intent(getActivity(),AddEventActivity.class);
-                startActivity(intent);
-                break;
-        }
-    }
 
 
     @Override
@@ -118,12 +96,6 @@ public class NavigationDrawerFragment extends Fragment implements View.OnClickLi
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
-
-        btn_VK = (Button)rootView.findViewById(R.id.btn_VK);
-        btn_VK.setOnClickListener(this);
-
-        btn_add_event = (Button)rootView.findViewById(R.id.btn_add_event);
-        btn_add_event.setOnClickListener(this);
 
 
         return rootView;

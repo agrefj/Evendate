@@ -24,8 +24,10 @@
     </string>
     <string name="title_activity_maps">Map</string>
 
-
-
+    <!-- strings for sync -->
+    <string name="content_authority">ru.getlect.evendate.evendate</string>
+    <string name="account">example.com</string>
+    <string name="account_type">evendate.ru</string>
 
 
 
